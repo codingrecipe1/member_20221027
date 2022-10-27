@@ -29,6 +29,10 @@ public class MemberRepository {
     public List<MemberDTO> findAll() {
         return sql.selectList("Member.findAll");
     }
+
+    public MemberDTO findById(Long id) {
+        return sql.selectOne("Member.findById", id);
+    }
 }
 
 

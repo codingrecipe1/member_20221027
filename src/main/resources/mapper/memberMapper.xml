@@ -14,4 +14,7 @@
     <select id="findAll" resultType="member">
         select * from member_table
     </select>
+    <select id="findById" parameterType="Long" resultType="member">
+        select * from member_table where id=#{id}
+    </select>
 </mapper>

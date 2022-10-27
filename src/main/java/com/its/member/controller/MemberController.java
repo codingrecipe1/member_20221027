@@ -69,6 +69,13 @@ public class MemberController {
         return "memberList";
     }
 
+    @GetMapping("/member")
+    public String findById(@RequestParam("id") Long id, Model model) {
+        MemberDTO memberDTO = memberService.findById(id);
+        model.addAttribute("member", memberDTO);
+        return "memberDetail";
+    }
+
 
 
 }

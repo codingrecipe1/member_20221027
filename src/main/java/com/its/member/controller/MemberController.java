@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class MemberController {
@@ -59,6 +60,13 @@ public class MemberController {
         } else {
             return "memberLogin";
         }
+    }
+
+    @GetMapping("/members")
+    public String findAll(Model model) {
+        List<MemberDTO> memberList = memberService.findAll();
+        model.addAttribute("memberList", memberList);
+        return "memberList";
     }
 
 

@@ -12,4 +12,15 @@ public class MemberRepository {
     public int save(MemberDTO memberDTO) {
         return sql.insert("Member.save", memberDTO);
     }
+
+    public MemberDTO login(String memberEmail, String memberPassword) {
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setMemberEmail(memberEmail);
+        memberDTO.setMemberPassword(memberPassword);
+        return sql.selectOne("Member.login", memberDTO);
+    }
+
+    public MemberDTO login(MemberDTO memberDTO) {
+        return sql.selectOne("Member.login", memberDTO);
+    }
 }

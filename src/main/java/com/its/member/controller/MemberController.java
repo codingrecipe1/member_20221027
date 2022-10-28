@@ -87,6 +87,27 @@ public class MemberController {
         return "redirect:/members";
     }
 
+    @GetMapping("/update")
+    public String updateForm(HttpSession session, Model model) {
+        // session 값을 가져오기
+        String memberEmail = (String) session.getAttribute("loginEmail");
+        // memberEmail로 DB에서 해당 회원의 전체 정보 조회
+        MemberDTO memberDTO = memberService.findByEmail(memberEmail);
+        model.addAttribute("member", memberDTO);
+        return "memberUpdate";
+    }
+
+    @PostMapping("/update")
+    public String update(@ModelAttribute MemberDTO memberDTO) {
+        boolean result = memberService.update(memberDTO);
+        if (result) {
+            // 로그인 회원의 memberDetail.jsp
+            return "redirect:/member?id="+memberDTO.getId();
+        } else {
+            return "index";
+        }
+    }
+
 
 
 }

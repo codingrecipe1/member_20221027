@@ -15,8 +15,14 @@
     <div class="container">
         <h2>${sessionScope.loginEmail} 님 환영합니다.</h2>
         <h2>model값: ${modelEmail}</h2>
-
+        <button class="btn btn-warning" onclick="updateForm()">내정보수정하기</button>
         <a href="/">index.jsp</a>
     </div>
 </body>
+<%-- /update 주소를 요청하는 update 함수 --%>
+<script>
+    const updateForm = () => {
+        location.href = "/update";
+    }
+</script>
 </html>

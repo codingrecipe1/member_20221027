@@ -11,6 +11,7 @@
 <head>
     <title>memberList.jsp</title>
     <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+    <script src="/resources/js/jquery.js"></script>
 </head>
 <body>
 <div class="container">
@@ -23,6 +24,7 @@
             <th>age</th>
             <th>조회</th>
             <th>삭제</th>
+            <th>조회(ajax)</th>
         </tr>
         <c:forEach items="${memberList}" var="member">
             <tr>
@@ -39,17 +41,65 @@
                 <td>
                     <button class="btn btn-danger" onclick="deleteMember('${member.id}')">삭제</button>
                 </td>
+                <td>
+                    <button class="btn btn-primary" onclick="findMember('${member.id}')">조회</button>
+                </td>
             </tr>
         </c:forEach>
     </table>
+    <div id="detail-area">
+
+    </div>
 </div>
 </body>
 <script>
+    const findMember = (findId) => {
+        console.log("findId", findId);
+        const detailArea = document.getElementById("detail-area");
+        $.ajax({
+            type: "get",
+            url: "/detail-ajax",
+            data: {id: findId},
+            dataType: "json",
+            success: function (member) {
+                console.log("조회결과", member);
+                console.log("조회id: ", member.id);
+                let result =
+                    "        <table class=\"table table-striped\">\n" +
+                    "            <tr>\n" +
+                    "                <th>id</th>\n" +
+                    "                <td>"+ member.id +"</td>\n" +
+                    "            </tr>\n" +
+                    "            <tr>\n" +
+                    "                <th>email</th>\n" +
+                    "                <td>" + member.memberEmail + "</td>\n" +
+                    "            </tr>\n" +
+                    "            <tr>\n" +
+                    "                <th>password</th>\n" +
+                    "                <td>" + member.memberPassword + "</td>\n" +
+                    "            </tr>\n" +
+                    "            <tr>\n" +
+                    "                <th>name</th>\n" +
+                    "                <td> " + member.memberName + "</td>\n" +
+                    "            </tr>\n" +
+                    "            <tr>\n" +
+                    "                <th>age</th>\n" +
+                    "                <td>" + member.memberAge + "</td>\n" +
+                    "            </tr>\n" +
+                    "        </table>";
+                detailArea.innerHTML = result;
+            },
+            error: function () {
+
+            }
+        });
+    }
+
     const deleteMember = (clickedId) => {
         <%--console.log('${memberList}');--%>
         <%--console.log('${memberList.id}')--%>
         console.log("클릭한 id값: ", clickedId);
-        location.href = "/delete?id="+clickedId;
+        location.href = "/delete?id=" + clickedId;
     }
 </script>
 </html>

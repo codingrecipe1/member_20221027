@@ -118,6 +118,14 @@ public class MemberController {
         return checkResult;
     }
 
+    @GetMapping("/detail-ajax")
+    public @ResponseBody MemberDTO detailAjax(@RequestParam("id") Long id) {
+        System.out.println("id = " + id);
+//        MemberDTO memberDTO = memberService.findById(id);
+//        return memberDTO;
+        return memberService.findById(id);
+    }
+
     @GetMapping("/ajax-ex")
     public String ajaxEx() {
         return "ajaxEx";

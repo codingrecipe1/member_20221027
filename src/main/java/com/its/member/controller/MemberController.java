@@ -111,6 +111,13 @@ public class MemberController {
         return "index";
     }
 
+    @PostMapping("/duplicate-check")
+    public @ResponseBody String emailDuplicateCheck(@RequestParam("inputEmail") String memberEmail) {
+        System.out.println("memberEmail = " + memberEmail);
+        String checkResult = memberService.emailDuplicateCheck(memberEmail);
+        return checkResult;
+    }
+
     @GetMapping("/ajax-ex")
     public String ajaxEx() {
         return "ajaxEx";
@@ -164,6 +171,8 @@ public class MemberController {
         List<MemberDTO> memberDTOList = memberService.findAll();
         return memberDTOList;
     }
+
+
 
 
 

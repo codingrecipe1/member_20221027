@@ -26,4 +26,7 @@
     <update id="update" parameterType="member">
         update member_table set memberName=#{memberName}, memberAge=#{memberAge} where id=#{id}
     </update>
+    <select id="duplicateCheck" parameterType="String" resultType="String">
+        select memberEmail from member_table where memberEmail=#{memberEmail}
+    </select>
 </mapper>

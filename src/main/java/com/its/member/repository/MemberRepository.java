@@ -45,6 +45,10 @@ public class MemberRepository {
     public int update(MemberDTO memberDTO) {
         return sql.update("Member.update", memberDTO);
     }
+
+    public String emailDuplicateCheck(String memberEmail) {
+        return sql.selectOne("Member.duplicateCheck", memberEmail);
+    }
 }
 
 

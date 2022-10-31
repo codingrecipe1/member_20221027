@@ -10,6 +10,7 @@
 <head>
     <title>memberSave.jsp</title>
     <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+    <script src="/resources/js/jquery.js"></script>
     <style>
         #save-form {
             width: 800px;
@@ -19,7 +20,8 @@
 <body>
     <div class="container" id="save-form">
         <form action="/save" method="post" name="saveForm">
-            <input type="text" name="memberEmail" placeholder="이메일" class="form-control">
+            <input type="text" name="memberEmail" id="memberEmail" onblur="emailDuplicateCheck()" placeholder="이메일" class="form-control">
+            <span id="email-dup-check"></span>
             <span id="email-input-check"></span>
             <input type="text" name="memberPassword" placeholder="비밀번호" class="form-control">
             <input type="text" name="memberName" placeholder="이름" class="form-control">
@@ -30,6 +32,31 @@
     </div>
 </body>
 <script>
+    const emailDuplicateCheck = () => {
+        const email = document.getElementById("memberEmail").value;
+        const checkResult = document.getElementById("email-dup-check");
+        console.log("입력한 이메일", email);
+        $.ajax({
+           type: "post",
+           url: "/duplicate-check",
+           dataType: "text",
+           data: {inputEmail: email},
+           success: function (result) {
+               console.log("checkResult: ", result);
+               if (result == "ok") {
+                   checkResult.innerHTML = "사용할 수 있는 이메일입니다";
+                   checkResult.style.color = "green";
+               } else {
+                   checkResult.innerHTML = "이미 사용 중인 이메일입니다";
+                   checkResult.style.color = "red";
+               }
+           },
+           error: function () {
+               console.log("실패");
+           }
+        });
+
+    }
     const save = () => {
         console.log("save 함수호출");
         if (document.saveForm.memberEmail.value == "") {

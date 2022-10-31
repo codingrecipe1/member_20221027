@@ -63,6 +63,15 @@ public class MemberService {
             return false;
         }
     }
+
+    public String emailDuplicateCheck(String memberEmail) {
+        String checkResult = memberRepository.emailDuplicateCheck(memberEmail);
+        if (checkResult == null) {
+            return "ok";
+        } else {
+            return "no";
+        }
+    }
 }
 
 
